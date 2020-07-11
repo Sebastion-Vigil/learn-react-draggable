@@ -14,7 +14,7 @@ class Tile extends React.Component {
               onDrag={this.props.onDrag}
               onStop={this.props.onStop}
             >
-                <div className='tile'></div>     
+                <div className='tile'> {this.props.posX} {this.props.posY}</div>     
             </Draggable>
         )
     }

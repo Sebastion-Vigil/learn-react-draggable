@@ -1,96 +1,103 @@
 import React from 'react'
-import Draggable from 'react-draggable'
 
 import Tile from './Tile.js'
+import TileLanding from './TileLanding.js'
 
 import '../css/Game.css'
 
 class Game extends React.Component {
-  state = {
-    activeDrags: 0,
-    deltaPosition: {
-      x: 0,
-      y: 0
-    },
-    controlledPosition: {
-      x: 0,
-      y: 0
-    }
+
+  state={
+    tileXY: [0, 0],
+    tileLandingColors: [
+      'grey',
+      'grey',
+      'grey'
+    ],
+    tileLandingBorders: [
+      'none',
+      'none',
+      'none'
+    ]
   }
 
   handleDrag = (e, ui) => {
-    const { x, y } = this.state.deltaPosition
-    console.log(ui.x, ui.y)
+    const border = '1.5px solid blue'
+    const color = 'lightblue'
+    const landingBorders = ['none', 'none', 'none']
+    const landingColors = ['grey', 'grey', 'grey']
+    const tilePOS = this.state.tileXY
+    const x =  ui.x
+    const y = ui.y
+    tilePOS[0] = x
+    tilePOS[1] = y
+    if (x >= 10 && x <= 15 && y >= 10 && y <= 15) {
+      landingBorders[0] = border
+      landingColors[0] = color
+    } 
+    if (x >= 10 && x <= 15 && y >= 60 && y <= 65) {
+      landingBorders[1] = border
+      landingColors[1] = color
+    } 
+    if (x >= 10 && x <= 15 && y >= 110 && y <= 115) {
+      landingBorders[2] = border
+      landingColors[2] = color
+    } 
     this.setState({
-      deltaPosition: {
-        x: x + ui.deltaX,
-        y: y + ui.deltaY
-      }
+      tileXY: tilePOS,
+      tileLandingBorders: landingBorders,
+      tileLandingColors: landingColors
     })
   }
 
   onStart = () => {
-    console.log("started!")
-    let newActiveDrags = this.state.activeDrags
-    newActiveDrags += 1
+    const tilePOS = [0, 0]
     this.setState({
-      activeDrags: newActiveDrags
+      tileXY: tilePOS
     })
   }
 
   onStop = () => {
     console.log("stopped!")
-    let newActiveDrags = this.state.activeDrags
-    newActiveDrags -= 1
-    this.setState({
-      activeDrags: newActiveDrags
-    })
   }
 
-  // For controlled component
-  adjustXPos = e => {
-    e.preventDefault()
-    e.stopPropagation()
-    const { x, y } = this.state.controlledPosition
-    this.setState({ controlledPosition: { x: x - 10, y } })
-  }
-
-  adjustYPos = e => {
-    e.preventDefault()
-    e.stopPropagation()
-    const { controlledPosition } = this.state
-    const { x, y } = controlledPosition
-    this.setState({ controlledPosition: { x, y: y - 10 } })
-  }
-
-  onControlledDrag = (e, position) => {
-    const { x, y } = position
-    console.log(x, y)
-    this.setState({ controlledPosition: { x, y } })
-  }
-
-  onControlledDragStop = (e, position) => {
-    this.onControlledDrag(e, position)
-    this.onStop()
-  }
+ 
   render () {
-    const dragHandlers = { onStart: this.onStart, onStop: this.onStop }
-    const { deltaPosition, controlledPosition } = this.state
     return (
       <div className='game'>
         <Tile
-          x={10}
+          x={375}
           y={10}
+          posX={this.state.tileXY[0]}
+          posY={this.state.tileXY[1]}
           onStart={this.onStart}
           onDrag={this.handleDrag}
           onStop={this.onStop}
         />
         <Tile
-          x={10}
+          x={375}
           y={60}
           onStart={this.onStart}
           onDrag={this.handleDrag}
           onStop={this.onStop}
+        />
+        <TileLanding
+          x={10}
+          y={10}
+          color={this.state.tileLandingColors[0]}
+          border={this.state.tileLandingBorders[0]}
+        />
+        <TileLanding
+          x={10}
+          y={60}
+          color={this.state.tileLandingColors[1]}
+          border={this.state.tileLandingBorders[1]}
+        />
+        <TileLanding
+          x={10}
+          y={110}
+          color={this.state.tileLandingColors[2]}
+          border={this.state.tileLandingBorders[2]}
         />
       </div>
     )
