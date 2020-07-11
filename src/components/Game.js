@@ -1,6 +1,8 @@
 import React from 'react'
 import Draggable from 'react-draggable'
 
+import Tile from './Tile.js'
+
 import '../css/Game.css'
 
 class Game extends React.Component {
@@ -28,6 +30,7 @@ class Game extends React.Component {
   }
 
   onStart = () => {
+    console.log("started!")
     let newActiveDrags = this.state.activeDrags
     newActiveDrags += 1
     this.setState({
@@ -36,6 +39,7 @@ class Game extends React.Component {
   }
 
   onStop = () => {
+    console.log("stopped!")
     let newActiveDrags = this.state.activeDrags
     newActiveDrags -= 1
     this.setState({
@@ -74,12 +78,19 @@ class Game extends React.Component {
     const { deltaPosition, controlledPosition } = this.state
     return (
       <div className='game'>
-        <Draggable defaultPosition={{x: 10, y: 10}} bounds='parent' onDrag={this.handleDrag} {...dragHandlers}>
+        <Tile
+          x={10}
+          y={10}
+          onStart={this.onStart}
+          onDrag={this.handleDrag}
+          onStop={this.onStop}
+        />
+        {/* <Draggable defaultPosition={{x: 10, y: 10}} bounds='parent' onDrag={this.handleDrag} {...dragHandlers}>
           <div className='tile'></div>
         </Draggable>
         <Draggable defaultPosition={{x: 10, y: 60}} bounds='parent' onDrag={this.handleDrag} {...dragHandlers}>
           <div className='tile'></div>
-        </Draggable>
+        </Draggable> */}
       </div>
     )
   }
