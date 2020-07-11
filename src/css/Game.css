@@ -1,0 +1,13 @@
+.game {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    border: 1px solid gold;
+}
+
+.tile {
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    background-color: gold;
+}
