@@ -85,12 +85,13 @@ class Game extends React.Component {
           onDrag={this.handleDrag}
           onStop={this.onStop}
         />
-        {/* <Draggable defaultPosition={{x: 10, y: 10}} bounds='parent' onDrag={this.handleDrag} {...dragHandlers}>
-          <div className='tile'></div>
-        </Draggable>
-        <Draggable defaultPosition={{x: 10, y: 60}} bounds='parent' onDrag={this.handleDrag} {...dragHandlers}>
-          <div className='tile'></div>
-        </Draggable> */}
+        <Tile
+          x={10}
+          y={60}
+          onStart={this.onStart}
+          onDrag={this.handleDrag}
+          onStop={this.onStop}
+        />
       </div>
     )
   }
